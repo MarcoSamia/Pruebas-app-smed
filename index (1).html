@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Tiempos SMED</title>
+  
+  <!-- Enlace al archivo CSS externo -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- PANTALLA PRINCIPAL: TOMA DE TIEMPOS -->
+<div id="pantalla-tiempos">
+  <div class="header">
+    <img src="logo7la.jpg" alt="Logo" class="logo">
+    <h1 class="titulo-app">Tiempos SMED</h1>
+  </div>
+
+  <!-- Datos del cambio de modelo-->
+  <div class="datos-cambio">
+    <h3>Datos del cambio de molde:</h3>
+    <div class="campos-datos">
+      <label>Inyectora:
+        <select id="inyectora" class="campo-obligatorio" required>
+          <option value="">-- Selecciona --</option>
+          <option value="900">900-1</option>
+          <option value="1100-1">1100-1</option>
+          <option value="1100-2">1100-2</option>
+          <option value="1600-1">1600-1</option>
+          <option value="1600-2">1600-2</option>
+          <option value="2200-1">2200-1</option>
+          <option value="2200-2">2200-2</option>
+          <option value="2200-3">2200-3</option>
+          <option value="2800">2800</option>
+        </select>
+        <span class="mensaje-error">Este campo es obligatorio</span>
+      </label>
+      <!-- opciones de molde que sale -->
+      <label>Molde que sale:
+      <select id="moldeSale" class="campo-obligatorio" required>
+        <option value="">-- Selecciona --</option>
+        <option value="CYLINDER WITH SLEEVE 176">CYLINDER WITH SLEEVE 176</option>
+        <option value="CYLINDER WITH SLEEVE 177">CYLINDER WITH SLEEVE 177</option>
+        <option value="IGNITION COVER 225">IGNITION COVER 225</option>
+        <option value="BODY BALANCE K5">BODY BALANCE K5</option>
+        <option value="BODY BALANCE K7">BODY BALANCE K7</option>
+        <option value="TIMMING 002">TIMMING 002</option>
+        <option value="TIMMING 661">TIMMING 661</option>
+        <option value="IGNITION WOLF 852">IGNITION WOLF 852</option>
+        <option value="IGNITION DOITER 061">IGNITION DOITER 061</option>
+        <option value="HSG AS 060">HSG AS 060</option>
+        <option value="HSG MS 071">HSG MS 071</option>
+        <option value="GHL 331">GHL 331</option>
+        <option value="GHR 336">GHR 336</option>
+        <option value="MAIN HOUSING 285">MAIN HOUSING 285</option>
+        <option value="CLUTCH HOUSING 308">CLUTCH HOUSING 308</option>
+        <option value="CRANKCASE AS 821">CRANKCASE AS 821</option>
+        <option value="CRANKCASE AS 822">CRANKCASE AS 822</option>
+        <option value="CRANKCASE MS 831">CRANKCASE MS 831</option>
+        <option value="CRANKCASE MS 832">CRANKCASE MS 832</option>
+        <option value="CRANKCASE HALF 701">CRANKCASE HALF 701</option>
+        <option value="EATON 697">EATON 697</option>
+        <option value="EATON 438">EATON 438</option>
+        <option value="EATON 130">EATON 130</option>
+        <option value="GHL 055">GHL 055</option>
+        <option value="TRANSMISSION COVER MIDDLE 045">TRANSMISSION COVER MIDDLE 045</option>
+        <option value="IGNITION COVER 059">IGNITION COVER 059</option>
+        <option value="IGNITION COVER 063">IGNITION COVER 063</option>
+      </select>
+      <span class="mensaje-error">Debe seleccionar un molde</span>
+      </label>
+      <!-- opciones de molde que entra -->
+      <label>Molde que entra:
+      <select id="moldeEntra" class="campo-obligatorio" required onchange="actualizarTiempoObjetivo()">
+        <option value="">-- Selecciona --</option>
+        <option value="CYLINDER WITH SLEEVE 176">CYLINDER WITH SLEEVE 176</option>
+        <option value="CYLINDER WITH SLEEVE 177">CYLINDER WITH SLEEVE 177</option>
+        <option value="IGNITION COVER 225">IGNITION COVER 225</option>
+        <option value="BODY BALANCE K5">BODY BALANCE K5</option>
+        <option value="BODY BALANCE K7">BODY BALANCE K7</option>
+        <option value="TIMMING 002">TIMMING 002</option>
+        <option value="TIMMING 661">TIMMING 661</option>
+        <option value="IGNITION WOLF 852">IGNITION WOLF 852</option>
+        <option value="IGNITION DOITER 061">IGNITION DOITER 061</option>
+        <option value="HSG AS 060">HSG AS 060</option>
+        <option value="HSG MS 071">HSG MS 071</option>
+        <option value="GHL 331">GHL 331</option>
+        <option value="GHR 336">GHR 336</option>
+        <option value="MAIN HOUSING 285">MAIN HOUSING 285</option>
+        <option value="CLUTCH HOUSING 308">CLUTCH HOUSING 308</option>
+        <option value="CRANKCASE AS 821">CRANKCASE AS 821</option>
+        <option value="CRANKCASE AS 822">CRANKCASE AS 822</option>
+        <option value="CRANKCASE MS 831">CRANKCASE MS 831</option>
+        <option value="CRANKCASE MS 832">CRANKCASE MS 832</option>
+        <option value="CRANKCASE HALF 701">CRANKCASE HALF 701</option>
+        <option value="EATON 697">EATON 697</option>
+        <option value="EATON 438">EATON 438</option>
+        <option value="EATON 130">EATON 130</option>
+        <option value="GHL 055">GHL 055</option>
+        <option value="TRANSMISSION COVER MIDDLE 045">TRANSMISSION COVER MIDDLE 045</option>
+        <option value="IGNITION COVER 059">IGNITION COVER 059</option>
+        <option value="IGNITION COVER 063">IGNITION COVER 063</option>
+      </select>
+      <span class="mensaje-error">Debe seleccionar un molde</span>
+      </label>
+      <!-- opciones del tipo de cambio -->
+      <label>Tipo de cambio:
+      <select id="tipoCambio" class="campo-obligatorio" required onchange="actualizarTiempoObjetivo()">
+        <option value="">-- Selecciona --</option>
+        <option value="CC">CC</option>
+        <option value="MxM">MxM</option>
+      </select>
+      <span class="mensaje-error">Debe selecconar el tipo de cambio</span>
+      </label>
+
+      <label>Tiempo objetivo (min):<input type="number" id="tiempoObjetivo"></label>
+      <label>Fecha del cambio:
+        <input 
+          type="text" 
+          id="fechaCambio" 
+          class="campo-obligatorio"
+          readonly 
+          required
+          ondblclick="editarCampoFecha('fechaCambio')"
+          placeholder="DD/MM/AAAA"
+        >
+        <span class="mensaje-error">Ingrese la fecha del cambio</span>
+      </label>
+      <label>Semana:
+        <input 
+          type="text" 
+          id="semanaCambio" 
+          class="campo-obligatorio"
+          readonly 
+          required
+          ondblclick="editarCampoFecha('semanaCambio')"
+          pattern="[0-9]{1,2}" 
+          title="Número de semana (1-52)"
+        >
+        <span class="mensaje-error">Ingrese el número de semana</span>
+      </label>
+      <label>Hora de inicio:
+        <input 
+          type="datetime-local" 
+          id="horaInicio" 
+          class="campo-obligatorio"
+          required
+          onchange="validarCampoIndividual('horaInicio')"
+        >
+        <span class="mensaje-error">Ingrese la hora de inicio</span>
+      </label>
+      <label>Hora de termino:
+        <input 
+          type="datetime-local" 
+          id="horaTermino" 
+          class="campo-obligatorio"
+          required
+          onchange="validarCampoIndividual('horaTermino')"
+        >
+        <span class="mensaje-error">Ingrese la hora de término</span>
+      </label>
+      <label>Razón del cambio:
+        <select 
+          id="razonCambio" 
+          class="campo-obligatorio" 
+          required
+          onchange="validarCampoIndividual('razonCambio')"
+        >
+          <option value="">-- Selecciona --</option>
+          <option value="Programado">Programado</option>
+          <option value="No programado">No programado</option>
+        </select>
+        <span class="mensaje-error">Seleccione la razón del cambio</span>
+      </label>
+
+    </div>
+  </div>
+
+  <!-- Mensaje de instrucciones -->
+  <p>Presiona los iconos para registrar el tiempo de cada acividad. Para editar el nombre de una actividad o un tiempo existente presiona dos veces sobre el.</p>
+  
+  <!-- Boton para ingresar actividades nuevas -->
+  <label for="nuevaActividad">Nueva actividad:</label>
+  <input type="text" id="nuevaActividad" placeholder="Escribe actividad aquí">
+  <button onclick="agregarActividad()">Agregar</button>
+ 
+  <!-- encabezados de la tabla de tiepos -->
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Orden</th>
+        <th>Actividad</th>
+        <th>Acciones</th>
+        <th>Duración (mm:ss)</th>
+        <th>Responsable</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+<hr style="margin: 40px 0;">
+
+<!-- tabla de paros -->
+<h3>Paros por otros departamentos:</h3>
+
+<div style="margin-bottom: 10px;">
+  <label>Departamento:</label>
+  <select id="departamentoParo">
+    <option value="Mantenimiento">Mantenimiento</option>
+    <option value="Moldes">Moldes</option>
+    <option value="Producción">Producción</option>
+    <option value="Procesos">Procesos</option>
+    <option value="Calidad">Calidad</option>
+    <option value="Proyectos">Proyectos</option>
+  </select>
+
+  <label style="margin-left: 10px;">Paro:</label>
+  <input type="text" id="nombreParo" placeholder="Escribe el paro aquí">
+  <button onclick="agregarParo()">Agregar paro</button>
+</div>
+
+<!-- encabezados de tabla de paros -->
+<table id="tablaParos">
+  <thead>
+    <tr>
+      <th>Departamento</th>
+      <th>Paro</th>
+      <th>Acciones</th>
+      <th>Duración</th>
+      <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+
+  <!-- boton para enviar datos a Google Sheets-->
+  <div id="feedback" style="margin-top: 10px; font-weight: bold;"></div>
+
+  <!-- INDICADOR DE AUTOGUARDADO -->
+  <div id="autosave-indicator" style="
+    margin: 8px 0; 
+    padding: 6px 12px;
+    font-size: 13px; 
+    color: #2e7d32; 
+    background-color: #f1f8e9;
+    border: 1px solid #c5e1a5;
+    border-radius: 4px;
+    text-align: center;
+  ">
+    <span id="autosave-status">🔄 Autoguardado activo</span>
+    <span id="last-save-time" style="margin-left: 10px; color: #666;"></span>
+  </div>
+
+  
+  <button onclick="subirADatosGoogle()" class="btn-principal enviar" style="background-color: #34A853; color: white;">Enviar Datos</button>
+
+  <!-- Botón para ir a checklist -->
+  <button
+    onclick="cambiarPantalla('pantalla-checklist')"
+    class="btn-principal checklist"
+    style="background-color: #1e37a4; color: white;">
+    Ir a checklist
+  </button>
+  
+  <!-- Boton para gestionar moldes -->
+ <button 
+   onclick="cambiarPantalla('pantalla-gestion-moldes')" 
+   class="btn-principal gestion-moldes" 
+   style="background-color: #6f42c1; color: white;">
+   Gestionar Moldes
+ </button>  
+
+    <!-- boton para reiniciar la aplicacion -->
+  <button id="btn-reset" class="btn-principal restablecer" style="background-color: #b11b20; color: white; margin-top: 20px;">Restablecer app</button>
+</div>
+
+<!-- PANTALLA DE CHECKLIST -->
+<div id="pantalla-checklist" style="display:none;">
+  <div class="header">
+    <img src="logo7la.jpg" alt="Logo" class="logo">
+    <h1>Checklist de preparación para cambio de molde</h1>
+  </div>
+
+ <table id="tabla-checklist">
+  <thead>
+    <tr>
+      <th>✔</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <!-- pasos de checklist -->
+  <tbody>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="molde-disponible"></td>
+      <td class="desc-cell">1. Verificar checklist de liberación del molde</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="referencias"></td>
+      <td class="desc-cell">2. Confirmar disponibilidad de herramientas y grúa</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="refrigeracion"></td>
+      <td class="desc-cell">3. Desconectar mangueras de refrigeración y vacío</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="limpieza"></td>
+      <td class="desc-cell">4. Limpieza de platinas realizada</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="altura"></td>
+      <td class="desc-cell">5. Ajustar bloque de altura</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="electricidad"></td>
+      <td class="desc-cell">6. Verificar conexiones</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="tornillos"></td>
+      <td class="desc-cell">7. Cerrar sesión de usuario SMED</td>
+    </tr>
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" data-id="prueba"></td>
+      <td class="desc-cell">8. Confirmar prueba de funcionamiento</td>
+    </tr>
+  </tbody>
+</table>
+
+  <button onclick="cambiarPantalla('pantalla-tiempos')" style="background-color: #1e37a4; color: white; margin-top: 20px; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer;">
+    Volver a toma de tiempos
+  </button>
+</div>
+
+<!-- Pantalla de gestión de moldes -->
+<div id="pantalla-gestion-moldes" style="display:none;">
+  <div class="header">
+    <img src="logo7la.jpg" alt="Logo" class="logo">
+    <h1>Gestión de Moldes</h1>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <h3>Agregar nuevo molde:</h3>
+    <input type="text" id="nuevoMoldeNombre" placeholder="Nombre del molde" style="padding: 8px; width: 300px; max-width: 100%;">
+    <button onclick="agregarMolde()" style="padding: 8px 16px; background: #1e37a4; color: white; border: none; border-radius: 4px; cursor: pointer;">Agregar Molde</button>
+  </div>
+
+  <table id="tabla-moldes">
+    <thead>
+      <tr>
+        <th>Nombre del Molde</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="lista-moldes">
+      <!-- Los moldes se cargan aquí dinámicamente -->
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    <button onclick="cambiarPantalla('pantalla-tiempos')" style="background-color: #1e37a4; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; margin-right: 10px;">
+      Volver a Tiempos
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+  
+<!-- Librerías -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+<!-- SCRIPT -->
+<script src="smed.js"></script>
+<script src="google-script.js"></script>
+<script>
+  const checklistStorageKey = "checklistSMED";
+
+  function guardarChecklist() {
+    const items = document.querySelectorAll("#tabla-checklist input[type=checkbox]");
+    const estado = {};
+    items.forEach(item => {
+      const id = item.dataset.id;
+      estado[id] = item.checked;
+    });
+    localStorage.setItem(checklistStorageKey, JSON.stringify(estado));
+  }
+
+  function cargarChecklist() {
+    const estadoGuardado = localStorage.getItem(checklistStorageKey);
+    if (!estadoGuardado) return;
+
+    const estado = JSON.parse(estadoGuardado);
+    const items = document.querySelectorAll("#tabla-checklist input[type=checkbox]");
+    items.forEach(item => {
+      const id = item.dataset.id;
+      if (estado[id] !== undefined) {
+        item.checked = estado[id];
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    cargarChecklist();
+    const items = document.querySelectorAll("#tabla-checklist input[type=checkbox]");
+    items.forEach(item => item.addEventListener("change", guardarChecklist));
+  });
+</script>
+
+<!-- botón flotante solo para móviles -->
+<button id="btn-add-mobile" onclick="mostrarInputActividad()">
+  ＋
+</button>
+
+</body>
+</html>
